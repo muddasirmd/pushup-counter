@@ -9,28 +9,37 @@ def main():
 
     detector = PoseDetector()
     counter = PushupCounter()
+    
+    # frame_skip = 5
+    # frame_count = 0
 
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
             break
 
-        result = detector.process(frame)
+        # Frame Skipping
+        # frame_count += 1
+        # if frame_count % frame_skip != 0:
+        #     continue
+
+        frame = cv2.resize(frame, (640, 480))
+        
+        timestamp_ms = int(cap.get(cv2.CAP_PROP_POS_MSEC))
+
+        result = detector.process(frame, timestamp_ms)
 
         if result.pose_landmarks:
-            landmarks = result.pose_landmarks.landmark
+            landmarks = result.pose_landmarks[0]
 
-            angle, count = counter.update(
-                landmarks,
-                detector.mp_pose
-            )
+            angle, count = counter.update(landmarks)
 
             detector.draw(frame, result)
             draw_counter(frame, count)
 
         cv2.imshow("Push-up Counter", frame)
 
-        if cv2.waitKey(10) & 0xFF == 27:
+        if cv2.waitKey(1) & 0xFF == 27:
             break
 
     cap.release()

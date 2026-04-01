@@ -6,21 +6,12 @@ class PushupCounter:
         self.counter = 0
         self.stage = None
 
-    def update(self, landmarks, mp_pose):
-        shoulder = [
-            landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
-            landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y
-        ]
-
-        elbow = [
-            landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x,
-            landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y
-        ]
-
-        wrist = [
-            landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].x,
-            landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y
-        ]
+    def update(self, landmarks):
+        # MediaPipe landmark indices
+        # Left side
+        shoulder = [landmarks[11].x, landmarks[11].y]
+        elbow    = [landmarks[13].x, landmarks[13].y]
+        wrist    = [landmarks[15].x, landmarks[15].y]
 
         angle = calculate_angle(shoulder, elbow, wrist)
 
@@ -30,5 +21,6 @@ class PushupCounter:
         if angle > ANGLE_UP_THRESHOLD and self.stage == "down":
             self.stage = "up"
             self.counter += 1
+            print(self.counter)
 
         return angle, self.counter
