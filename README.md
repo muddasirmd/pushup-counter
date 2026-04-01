@@ -13,9 +13,8 @@ OR
 - cp /path/to/your/video.mp4 data/pushups.mp4
 - (or just manually place your video inside data/)
 
-🧪 4. Add Sample Video
-- cp /path/to/your/video.mp4 data/pushups.mp4
-- (or just manually place your video inside data/)
+🧠 4. Add Model File
+- place model file in data/pose_landmarker_full.task
 
 🚀 5. Run Project
 - Activate venv: source venv/bin/activate OR venv\Scripts\activate
