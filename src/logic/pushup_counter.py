@@ -10,7 +10,7 @@ class PushupCounter:
         # MediaPipe landmark indices
         # Left side
         shoulder = [landmarks[11].x, landmarks[11].y]
-        elbow    = [landmarks[13].x, landmarks[13].y]
+        elbow    = [landmarks[13].x, landmarks[13].y] # ← angle is calculated here
         wrist    = [landmarks[15].x, landmarks[15].y]
 
         angle = calculate_angle(shoulder, elbow, wrist)
